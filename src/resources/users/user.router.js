@@ -1,5 +1,6 @@
 const User = require('./user.model');
 const usersService = require('./user.service');
+const taskRepo = require('../tasks/task.memory.repository');
 
 function userRoutes(app, options, done) {
 
@@ -25,6 +26,18 @@ function userRoutes(app, options, done) {
     app.delete('/:id', async (req, reply) => {
         const { id } = req.params;
         await usersService.deleteById(id);
+        taskRepo.updateUserIdToNull(id, null);
+        // const tasks4DeletedUser = tasks.filter((task) => task.userId === id);
+        // for await(const task of tasks4DeletedUser) {
+        //     task.userId = null;
+        //     taskService.updateById(task.id, 
+        //         task.title,
+        //         task.order,
+        //         task.description,
+        //         task.userId,
+        //         task.boardId,
+        //         task.columnId)
+        // }
         reply.code(204);
         reply.send();
     })

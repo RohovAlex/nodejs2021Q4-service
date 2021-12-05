@@ -15,12 +15,13 @@ function taskRoutes(app, options, done) {
     })
 
     app.post('/', async (req, reply) => {
-        const { title,
-        order,
-        description,
-        userId,
-        boardId,
-        columnId } = req.body;
+        const { 
+            title,
+            order,
+            description,
+            userId,
+            columnId } = req.body;
+            const boardId = req.params.id
         const task = await taskService.create(title,
             order,
             description,
@@ -31,17 +32,27 @@ function taskRoutes(app, options, done) {
         reply.send(task);
     })
 
-    app.delete('/:id', async (req, reply) => {
-        const { id } = req.params;
-        await taskService.deleteById(id);
+    app.delete('/:taskid', async (req, reply) => {
+        const { taskid } = req.params;
+        await taskService.deleteById(taskid);
         reply.code(204);
         reply.send();
     })
 
-    app.put('/:id', async (req, reply) => {
-        const { id } = req.params;
-        const { title, columns } = req.body;
-        const task = await taskService.updateById(id, title, columns);
+    app.put('/:taskid', async (req, reply) => {
+        const { taskid } = req.params;
+        const { title,
+            order,
+            description,
+            userId,
+            boardId,
+            columnId } = req.body;
+        const task = await taskService.updateById(taskid, title,
+            order,
+            description,
+            userId,
+            boardId,
+            columnId);
         reply.code(200);
         reply.send(task);
     })
