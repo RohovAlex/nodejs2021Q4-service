@@ -7,7 +7,7 @@ const app = fastify({ logger: true});
 
 app.register(require('fastify-swagger'), {
     exposeRoute: true,
-    routePrefix: '/docs',
+    routePrefix: '/doc',
     swagger: {
         info: {title: 'task4 Rest-server'}
     }
