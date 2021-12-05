@@ -10,8 +10,13 @@ function taskRoutes(app, options, done) {
     app.get('/:id', async (req, reply) => {
         const { id } = req.params;
         const task = await taskService.getById(id);
-        reply.code(200);
-        reply.send(task);
+        if(task) {
+            reply.code(200);
+            reply.send(task);
+        } else {
+            reply.code(404);
+            reply.send();
+        }
     })
 
     app.post('/', async (req, reply) => {

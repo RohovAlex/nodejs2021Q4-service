@@ -57,4 +57,8 @@ const updateUserIdToNull = (userId, nullUserId) => {
   })     
 }
 
-module.exports = { getAll, getById, create, deleteById, updateById, updateUserIdToNull };
+const deleteTasksWithBoard = (boardId) => {
+  tasks = tasks.filter((task) => task.boardId !== boardId);     
+}
+
+module.exports = { getAll, getById, create, deleteById, updateById, updateUserIdToNull, deleteTasksWithBoard };

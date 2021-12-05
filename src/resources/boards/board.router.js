@@ -1,4 +1,5 @@
 const boardService = require('./board.service');
+const tasksRepo = require('../tasks/task.memory.repository');
 
 function boardRoutes(app, options, done) {
 
@@ -10,8 +11,14 @@ function boardRoutes(app, options, done) {
     app.get('/:id', async (req, reply) => {
         const { id } = req.params;
         const board = await boardService.getById(id);
-        reply.code(200);
-        reply.send(board);
+        if(board) {
+            reply.code(200);
+            reply.send(board);
+        } else {
+            reply.code(404);
+            reply.send();
+        }
+        
     })
 
     app.post('/', async (req, reply) => {
@@ -24,6 +31,7 @@ function boardRoutes(app, options, done) {
     app.delete('/:id', async (req, reply) => {
         const { id } = req.params;
         await boardService.deleteById(id);
+        tasksRepo.deleteTasksWithBoard(id);
         reply.code(204);
         reply.send();
     })
