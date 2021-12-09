@@ -1,0 +1,14 @@
+"use strict";
+// migration to ts
+const { PORT } = require('./common/config');
+const app = require('./app');
+const start = async () => {
+    try {
+        await app.listen(PORT);
+    }
+    catch (error) {
+        app.log.error(error);
+    }
+};
+start();
+//# sourceMappingURL=server.js.map

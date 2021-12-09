@@ -10,4 +10,6 @@ const deleteById = (id) => usersRepo.deleteById(id);
 
 const updateById = (id, name, login, password) => usersRepo.updateById(id, name, login, password);
 
+const toResponse = (user) => usersRepo.toResponse(user)
+
 module.exports = { getAll, getById, create, deleteById, updateById };

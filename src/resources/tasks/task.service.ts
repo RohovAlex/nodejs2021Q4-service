@@ -1,16 +1,16 @@
-const tasksRepo = require('./task.memory.repository');
+const TaskRepo = require('./task.memory.repository');
 
-const getAll = () => tasksRepo.getAll();
+const getAllTasks = () => TaskRepo.getAll();
 
-const getById = (id) => tasksRepo.getById(id);
+const getTaskById = (id) => TaskRepo.getById(id);
 
-const create = (
+const createTask = (
     title,
     order,
     description,
     userId,
     boardId,
-    columnId) => tasksRepo.create(
+    columnId) => TaskRepo.create(
         title,
         order,
         description,
@@ -18,16 +18,16 @@ const create = (
         boardId,
         columnId);
 
-const deleteById = (id) => tasksRepo.deleteById(id);
+const deleteTaskById = (id) => TaskRepo.deleteById(id);
 
-const updateById = (
+const updateTaskById = (
     id, 
     title,
     order,
     description,
     userId,
     boardId,
-    columnId) => tasksRepo.updateById(
+    columnId) => TaskRepo.updateById(
         id, 
         title,
         order,

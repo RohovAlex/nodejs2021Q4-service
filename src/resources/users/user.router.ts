@@ -1,4 +1,4 @@
-const User = require('./user.model');
+// const User = require('./user.model');
 const usersService = require('./user.service');
 const taskRepo = require('../tasks/task.memory.repository');
 
@@ -6,7 +6,7 @@ function userRoutes(app, options, done) {
 
     app.get('/', async (req, reply) => {
         const users = await usersService.getAll();
-        reply.send(users.map(User.toResponse));
+        reply.send(users.map(usersService.toResponse));
     })
 
     app.get('/:id', async (req, reply) => {

@@ -3,13 +3,13 @@ const taskService = require('./task.service');
 function taskRoutes(app, options, done) {
 
     app.get('/', async (req, reply) => {
-        const tasks = await taskService.getAll();
+        const tasks = await taskService.getAllTasks();
         reply.send(tasks);
     })
 
     app.get('/:id', async (req, reply) => {
         const { id } = req.params;
-        const task = await taskService.getById(id);
+        const task = await taskService.getTaskById(id);
         if(task) {
             reply.code(200);
             reply.send(task);
@@ -27,7 +27,7 @@ function taskRoutes(app, options, done) {
             userId,
             columnId } = req.body;
             const boardId = req.params.id
-        const task = await taskService.create(title,
+        const task = await taskService.createTask(title,
             order,
             description,
             userId,
@@ -39,7 +39,7 @@ function taskRoutes(app, options, done) {
 
     app.delete('/:taskid', async (req, reply) => {
         const { taskid } = req.params;
-        await taskService.deleteById(taskid);
+        await taskService.deleteTaskById(taskid);
         reply.code(204);
         reply.send();
     })
@@ -52,7 +52,7 @@ function taskRoutes(app, options, done) {
             userId,
             boardId,
             columnId } = req.body;
-        const task = await taskService.updateById(taskid, title,
+        const task = await taskService.updateTaskById(taskid, title,
             order,
             description,
             userId,
