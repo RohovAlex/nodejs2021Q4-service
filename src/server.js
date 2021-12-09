@@ -1,3 +1,4 @@
+// migration to ts
 const { PORT } = require('./common/config');
 const app = require('./app');
 
