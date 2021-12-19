@@ -1,21 +1,31 @@
 import {v4 as uuid} from 'uuid';
-
-let tasks = [];
+interface ITask {
+  id: string,
+  title: string,
+  order: string,
+  description: string,
+  userId: string,
+  boardId: string,
+  columnId: string
+}
+let tasks: ITask[] = [];
 
 export default class Task {
-  tasks: any[] = tasks;
+  tasks: ITask[] = tasks;
 
-  static getAll = async () => tasks;
+  static getAll = async () : Promise<ITask[]> => tasks;
 
-  static getById = async (id) => tasks.find((task) => task.id === id);
+  static getById = async (id: string) : Promise<ITask | undefined> => tasks.find((task) => task.id === id);
 
-  static create = async (title,
-    order,
-    description,
-    userId,
-    boardId,
-    columnId) => {
-      const newTask = {
+  static create = async (params: {[key: string]: string}): Promise<ITask> => {
+    const { title,
+            order,
+            description,
+            userId,
+            boardId,
+            columnId } = params;
+
+      const newTask: ITask = {
         id: uuid(),
         title,
         order,
@@ -28,18 +38,19 @@ export default class Task {
     return newTask;
   };
 
-  static deleteById = async (id) => {
+  static deleteById = async (id: string): Promise<void> => {
     tasks = tasks.filter((task) => task.id !== id);
   };
 
-  static updateById = async (
-    id, 
-    title,
-    order,
-    description,
-    userId,
-    boardId,
-    columnId) => {
+  static updateById = async (params: {[key: string]: string}): Promise<ITask | undefined> => {
+    const { id, 
+            title,
+            order,
+            description,
+            userId,
+            boardId,
+            columnId } = params;
+    
     tasks = tasks.map((task) => task.id === id ? {
       id, 
       title,
@@ -48,11 +59,11 @@ export default class Task {
       userId,
       boardId,
       columnId} : task);
-    const updatedTask = await getById(id);
+    const updatedTask = await Task.getById(id);
     return updatedTask;
   };
 
-  static updateUserIdToNull = (userId, nullUserId) => {
+  static updateUserIdToNull = (userId: string, nullUserId: null): void => {
     tasks.forEach((task) => {
       if(task.userId === userId) {
         Object.assign(task, {"userId": nullUserId});
@@ -60,7 +71,7 @@ export default class Task {
     })     
   }
 
-  static deleteTasksWithBoard = (boardId) => {
+  static deleteTasksWithBoard = (boardId: string): void => {
     tasks = tasks.filter((task) => task.boardId !== boardId);     
   }
 }
