@@ -14,13 +14,23 @@
     }
   },
   "settings": {
-    "noInlineConfig": true
+    "noInlineConfig": true,
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts"]
+      }
+    },
+    "node": {
+      "resolvePaths": ["__dirname"],
+      "tryExtensions": [".js", ".ts"]
+    }
   },
   "extends": [
     "eslint:recommended",
     "plugin:node/recommended",
     "airbnb-base",
-    "prettier"
+    "prettier",
+    "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
     "import/extensions": "off",
