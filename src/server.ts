@@ -1,12 +1,13 @@
 // migration to ts
-const { PORT } = require('./common/config');
-const app = require('./app');
+import PORT from './common/config';
+
+import server from './app';
 
 const start = async () => {
   try {
-    await app.listen(PORT);
+    await server.listen(PORT);
   } catch (error) {
-    app.log.error(error);
+    server.log.error(error);
   }
 }
 

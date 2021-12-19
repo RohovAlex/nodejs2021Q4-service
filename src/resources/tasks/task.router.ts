@@ -1,13 +1,14 @@
-const taskService = require('./task.service');
+import { FastifyReply } from "fastify";
+import taskService from './task.service';
 
-function taskRoutes(app, options, done) {
+export default function taskRoutes(app, options, done) {
 
-    app.get('/', async (req, reply) => {
+    app.get('/', async (req, reply: FastifyReply) => {
         const tasks = await taskService.getAllTasks();
         reply.send(tasks);
     })
 
-    app.get('/:id', async (req, reply) => {
+    app.get('/:id', async (req, reply: FastifyReply) => {
         const { id } = req.params;
         const task = await taskService.getTaskById(id);
         if(task) {
@@ -19,7 +20,7 @@ function taskRoutes(app, options, done) {
         }
     })
 
-    app.post('/', async (req, reply) => {
+    app.post('/', async (req, reply: FastifyReply) => {
         const { 
             title,
             order,
@@ -37,14 +38,14 @@ function taskRoutes(app, options, done) {
         reply.send(task);
     })
 
-    app.delete('/:taskid', async (req, reply) => {
+    app.delete('/:taskid', async (req, reply: FastifyReply) => {
         const { taskid } = req.params;
         await taskService.deleteTaskById(taskid);
         reply.code(204);
         reply.send();
     })
 
-    app.put('/:taskid', async (req, reply) => {
+    app.put('/:taskid', async (req, reply: FastifyReply) => {
         const { taskid } = req.params;
         const { title,
             order,
@@ -64,5 +65,3 @@ function taskRoutes(app, options, done) {
 
     done()
 }
-
-module.exports = taskRoutes;

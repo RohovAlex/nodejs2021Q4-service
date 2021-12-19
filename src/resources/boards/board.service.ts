@@ -1,4 +1,4 @@
-const boardsRepo = require('./board.memory.repository');
+import boardsRepo from './board.memory.repository';
 
 const getAllBoards = () => boardsRepo.getAll();
 
@@ -10,4 +10,4 @@ const deleteBoardById = (id) => boardsRepo.deleteById(id);
 
 const updateBoardById = (id, title, columns) => boardsRepo.updateById(id, title, columns);
 
-module.exports = { getAllBoards, getBoardById, createBoard, deleteBoardById, updateBoardById };
+export default { getAllBoards, getBoardById, createBoard, deleteBoardById, updateBoardById };

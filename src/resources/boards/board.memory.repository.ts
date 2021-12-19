@@ -1,14 +1,21 @@
-const {v4: uuid} = require('uuid');
-let boards: any[]= [];
-class Board {
-  boards: any
+import {v4 as uuid} from 'uuid';
 
-  static getById = async (id) => boards.find((board) => board.id === id);
+interface IBoard {
+  id: string,
+  title: string,
+  columns: any[]
+}
 
-  static getAll = async () => boards;
+let boards: IBoard[] = [];
+export default class Board {
+  boards: IBoard[]
 
-  static create = async (title, columns) => {
-    const newBoard = {
+  static getById = async (id: string) : Promise<IBoard | undefined> => boards.find((board: IBoard) => board.id === id);
+
+  static getAll = async () : Promise<IBoard[]> => boards;
+
+  static create = async (title: string, columns: any[]) : Promise<IBoard> => {
+    const newBoard: IBoard = {
       id: uuid(),
       title, columns
     }
@@ -16,41 +23,13 @@ class Board {
     return newBoard;
   };
 
-  static deleteById = async (id) => {
+  static deleteById = async (id: string): Promise<void> => {
     boards = boards.filter((board) => board.id !== id);
   };
 
-  static updateById = async (id, title, columns) => {
+  static updateById = async (id: string, title: string, columns: any[]) : Promise<IBoard | undefined> => {
     boards = boards.map((board) => board.id === id ? {id, title, columns} : board);
-    const updatedBoard = await getById(id);
+    const updatedBoard = await Board.getById(id);
     return updatedBoard;
-  };
-  
+  }; 
 }
-
-
-// const getAllBoards = async () => boards;
-
-// const getBoardById = async (id) => boards.find((board) => board.id === id);
-
-// const create = async (title, columns) => {
-//     const newBoard = {
-//       id: uuid(),
-//       title, columns
-//     }
-//     boards.push(newBoard)
-//   return newBoard;
-// };
-
-// const deleteById = async (id) => {
-//   boards = boards.filter((board) => board.id !== id);
-// };
-
-// const updateById = async (id, title, columns) => {
-//   boards = boards.map((board) => board.id === id ? {id, title, columns} : board);
-//   const updatedBoard = await getById(id);
-//   return updatedBoard;
-// };
-
-// module.exports = { getAll, getById, create, deleteById, updateById };
-module.exports = Board;

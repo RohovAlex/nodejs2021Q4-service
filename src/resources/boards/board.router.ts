@@ -1,14 +1,16 @@
-const boardService = require('./board.service');
-const tasksRepo = require('../tasks/task.memory.repository');
+import { FastifyReply } from "fastify";
 
-function boardRoutes(app, options, done) {
+import boardService from './board.service';
+import tasksRepo from '../tasks/task.memory.repository';
 
-    app.get('/', async (req, reply) => {
+export default function boardRoutes(app, options, done) {
+
+    app.get('/', async (req, reply: FastifyReply) => {
         const boards = await boardService.getAllBoards();
         reply.send(boards);
     })
 
-    app.get('/:id', async (req, reply) => {
+    app.get('/:id', async (req, reply: FastifyReply) => {
         const { id } = req.params;
         const board = await boardService.getBoardById(id);
         if(board) {
@@ -17,18 +19,17 @@ function boardRoutes(app, options, done) {
         } else {
             reply.code(404);
             reply.send();
-        }
-        
+        }    
     })
 
-    app.post('/', async (req, reply) => {
+    app.post('/', async (req, reply: FastifyReply) => {
         const { title, columns } = req.body;
         const board = await boardService.createBoard(title, columns);
         reply.code(201);
         reply.send(board);
     })
 
-    app.delete('/:id', async (req, reply) => {
+    app.delete('/:id', async (req, reply: FastifyReply) => {
         const { id } = req.params;
         await boardService.deleteBoardById(id);
         tasksRepo.deleteTasksWithBoard(id);
@@ -36,7 +37,7 @@ function boardRoutes(app, options, done) {
         reply.send();
     })
 
-    app.put('/:id', async (req, reply) => {
+    app.put('/:id', async (req, reply: FastifyReply) => {
         const { id } = req.params;
         const { title, columns } = req.body;
         const board = await boardService.updateBoardById(id, title, columns);
@@ -46,5 +47,3 @@ function boardRoutes(app, options, done) {
 
     done()
 }
-
-module.exports = boardRoutes;
