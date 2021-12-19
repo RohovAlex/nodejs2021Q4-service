@@ -1,18 +1,15 @@
 "use strict";
-const fastify = require('fastify');
-const userRouter = require('./resources/users/user.router');
-const boardRouter = require('./resources/boards/board.router');
-const taskRouter = require('./resources/tasks/task.router');
-const app = fastify({ logger: true });
-app.register(require('fastify-swagger'), {
-    exposeRoute: true,
-    routePrefix: '/doc',
-    swagger: {
-        info: { title: 'task4 Rest-server' }
-    }
-});
-app.register(userRouter, { prefix: '/users' });
-app.register(boardRouter, { prefix: '/boards' });
-app.register(taskRouter, { prefix: '/boards/:id/tasks' });
-module.exports = app;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const fastify_1 = __importDefault(require("fastify"));
+const user_router_1 = __importDefault(require("./resources/users/user.router"));
+const board_router_1 = __importDefault(require("./resources/boards/board.router"));
+const task_router_1 = __importDefault(require("./resources/tasks/task.router"));
+const app = (0, fastify_1.default)({ logger: true });
+app.register(user_router_1.default, { prefix: '/users' });
+app.register(board_router_1.default, { prefix: '/boards' });
+app.register(task_router_1.default, { prefix: '/boards/:id/tasks' });
+exports.default = app;
 //# sourceMappingURL=app.js.map

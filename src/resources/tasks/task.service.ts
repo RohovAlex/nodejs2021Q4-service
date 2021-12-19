@@ -1,5 +1,6 @@
 import TaskRepo from './task.memory.repository';
-import ITask from './task.interface';
+import { ITask } from './task.interface';
+
 const getAllTasks = (): Promise<ITask[]> => TaskRepo.getAll();
 
 const getTaskById = (id: string): Promise<ITask | undefined> => TaskRepo.getById(id);

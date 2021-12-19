@@ -1,5 +1,6 @@
 import {v4 as uuid} from 'uuid';
-import ITask from './task.interface';
+import { ITask } from './task.interface';
+
 let tasks: ITask[] = [];
 
 export default class Task {
