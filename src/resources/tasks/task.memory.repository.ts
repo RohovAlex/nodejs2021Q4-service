@@ -1,16 +1,9 @@
 import {v4 as uuid} from 'uuid';
-interface ITask {
-  id: string,
-  title: string,
-  order: string,
-  description: string,
-  userId: string,
-  boardId: string,
-  columnId: string
-}
+import ITask from './task.interface';
 let tasks: ITask[] = [];
 
 export default class Task {
+
   tasks: ITask[] = tasks;
 
   static getAll = async () : Promise<ITask[]> => tasks;

@@ -1,39 +1,39 @@
 import TaskRepo from './task.memory.repository';
+import ITask from './task.interface';
+const getAllTasks = (): Promise<ITask[]> => TaskRepo.getAll();
 
-const getAllTasks = () => TaskRepo.getAll();
+const getTaskById = (id: string): Promise<ITask | undefined> => TaskRepo.getById(id);
 
-const getTaskById = (id) => TaskRepo.getById(id);
-
-const createTask = (
+const createTask = ({
     title,
     order,
     description,
     userId,
     boardId,
-    columnId) => TaskRepo.create(
+    columnId}: {[key: string]: string}) : Promise<ITask> => TaskRepo.create({
         title,
         order,
         description,
         userId,
         boardId,
-        columnId);
+        columnId});
 
-const deleteTaskById = (id) => TaskRepo.deleteById(id);
+const deleteTaskById = (id: string): Promise<void> => TaskRepo.deleteById(id);
 
-const updateTaskById = (
+const updateTaskById = ({
     id, 
     title,
     order,
     description,
     userId,
     boardId,
-    columnId) => TaskRepo.updateById(
+    columnId}: {[key: string]: string}) : Promise<ITask | undefined> => TaskRepo.updateById({
         id, 
         title,
         order,
         description,
         userId,
         boardId,
-        columnId);
+        columnId});
 
 export default { getAllTasks, getTaskById, createTask, deleteTaskById, updateTaskById };
